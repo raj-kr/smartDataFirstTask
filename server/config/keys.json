@@ -1,0 +1,7 @@
+{
+    "PORT": 3001,
+    "clientPath": "http://localhost:3000",
+    "serverPath": "http://localhost:3001/",
+    "dbAddress": "mongodb://selfidb:selfi%26*db78@15.207.195.76:27017",
+    "userJwtKey": "`]PVq5z*>``Z5hFQbv6ADAh{wsBeTmY(B!+R);sg#)zK9;YSt*2{wLG+#ks86tC$=)q]Tg-Jm,bP_$<>a=c}hpH"
+}
