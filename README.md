@@ -1,4 +1,4 @@
-Got this assignment from the Naveen Prakash Sir, with the following funcanatility.
+Got this assignment from the Naveen Prakash Sir, with the following functionality.
 And using any free template from online.
 
 Create an application and develop below functionality-
