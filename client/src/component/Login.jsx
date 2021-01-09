@@ -20,7 +20,7 @@ const Login = ({ setLogged }) => {
         const { data: { code, token, msg } } = await userInstance.post('/users/login', payload);
         if (code === 200) {
             localStorage.setItem('accessToken', token);
-            history.push('/add-product')
+            history.push('/list-product')
             setLogged(true);
         } else {
             alert(msg);

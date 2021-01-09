@@ -19,6 +19,7 @@ app.use(
         extended: false,
     })
 );
+app.use("/public", express.static(__dirname + "/public"));
 
 mongoConnect();
 app.use("/users", require('./routes/users'));

@@ -23,7 +23,7 @@ const App = () => {
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={isLog ? '/list-product' : '/'}>SmartData eCom</Link>
+          <Link className="navbar-brand" to={isLog ? '/list-product' : '/'}>smartData eCom</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             {!isLog ?
               <ul className="navbar-nav ml-auto">
