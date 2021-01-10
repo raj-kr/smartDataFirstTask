@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { userInstance } from '../config/axios';
 import { Form, Button } from 'react-bootstrap';
 
-const ProductAdd = () => {
+const ProductEdit = ({ editId, setShow }) => {
     const [formData, setFormData] = useState({});
     const fileRef = useRef();
 
@@ -24,18 +24,18 @@ const ProductAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setShow(false);
         const payload = {
+            _id: editId,
             name: formData.name,
             description: formData.description,
             price: +formData.price,
             image: formData.image
         }
         try {
-            const { status, data: { msg } } = await userInstance.post('/products/product', payload);
+            const { status, data: { msg } } = await userInstance.patch('/products/product', payload);
             if (status === 200) {
                 alert(msg);
-                setFormData({ name: '', description: '', price: '' });
-                fileRef.current.value = "";
             } else {
                 alert(msg);
             }
@@ -44,9 +44,19 @@ const ProductAdd = () => {
         }
     }
 
+    const getProduct = async () => {
+        const response = await userInstance.get(`/products/product/${editId}`);
+        if (response.status === 200) {
+            setFormData(response.data.product);
+        }
+    }
+
+    useEffect(() => {
+        getProduct();
+    }, [])
+
     return (
-        <div className="inner">
-            <h3>Add Product</h3>
+        <div>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Name</label>
@@ -70,12 +80,11 @@ const ProductAdd = () => {
                         onChange={handleImage}
                         custom
                     />
-                    {/* <input type="file" name="image" ref={fileRef} className="form-control" onChange={handleImage} /> */}
                 </div>
-                <Button variant="success" className="btn-block" type="submit" >Add Product</Button>
+                <Button variant="success" className="btn-block" type="submit" >Edit Product</Button>
             </form>
         </div>
     );
 }
 
-export default ProductAdd;
+export default ProductEdit;

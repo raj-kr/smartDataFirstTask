@@ -25,7 +25,7 @@ const Signup = () => {
     }
 
     return (
-        <div>
+        <div className="inner">
             <form onSubmit={handleSubmit}>
                 <h3>Register</h3>
 

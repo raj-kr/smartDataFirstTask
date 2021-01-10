@@ -28,7 +28,7 @@ const Login = ({ setLogged }) => {
     }
 
     return (
-        <div>
+        <div className="inner">
             <form onSubmit={handleSubmit}>
                 <h3>Log in</h3>
 

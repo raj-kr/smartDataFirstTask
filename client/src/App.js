@@ -52,14 +52,12 @@ const App = () => {
       </nav>
 
       <div className="outer">
-        <div className="inner">
           <Switch>
             <Route exact path='/' render={(props) => <Login setLogged={setLogged} {...props} />} />
             <Route path="/sign-up" component={SignUp} />
             <PrivateRoute path="/add-product" component={ProductAdd} />
             <PrivateRoute path="/list-product" component={ProductList} />
           </Switch>
-        </div>
       </div>
     </div>
   );
