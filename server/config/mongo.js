@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const keys = require('./keys');
+const Keys = require('./index');
 
 async function mongoConnect() {
     try {
         mongoose.set('useCreateIndex', true);
-        await mongoose.connect(keys.dbAddress, {
+        await mongoose.connect(Keys.dbAddress, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             }

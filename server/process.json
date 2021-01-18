@@ -1,0 +1,14 @@
+{
+  "script": "npm start",
+  "watch_options": {
+    "followSymlinks": false
+  },
+  "name": "smartData",
+  "watch": [
+    "./"
+  ],
+  "ignore_watch": [
+    "node_modules",
+    "public"
+  ]
+}

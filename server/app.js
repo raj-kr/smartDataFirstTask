@@ -1,15 +1,16 @@
 const express = require('express');
 const http = require('http');
+const path = require("path");
 const cors = require('cors');
 const mongoConnect = require('./config/mongo');
+const Keys = require('./config/');
 
 let app = express();
 const server = http.createServer(app);
-
 //middlewares
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: Keys.client,
         credentials: true,
     })
 );
@@ -22,14 +23,22 @@ app.use(
 app.use("/public", express.static(__dirname + "/public"));
 
 mongoConnect();
+
+/* 
+* Routes
+*/
 app.use("/users", require('./routes/users'));
 app.use("/products", require('./routes/products'));
 
+// app.use(express.static(path.join(__dirname, './build')));
+// app.get("*", (req, res) => {
+//     res.sendFile(path.resolve("./", "build", "index.html"));
+// });
 app.get('/', async (req, res) => {
     res.send('Hello from server');
 });
 
 
-server.listen(3001, () => {
+server.listen(3003, () => {
     console.log('Server is running on port 3001');
 });

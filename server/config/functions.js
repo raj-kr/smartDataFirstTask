@@ -1,4 +1,4 @@
-const keys = require('./keys.json');
+const Keys = require('./index');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const pathDirectory = require('path');
@@ -43,7 +43,7 @@ const signJwt = (userid, name) => {
             userid,
             name
         }
-        token = jwt.sign(tokenData, keys.userJwtKey, {
+        token = jwt.sign(tokenData, Keys.usersecret, {
             expiresIn: "1h"
         });
     }

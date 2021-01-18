@@ -1,7 +1,0 @@
-{
-    "PORT": 3001,
-    "clientPath": "http://localhost:3000",
-    "serverPath": "http://localhost:3001/",
-    "dbAddress": "mongodb://localhost:27017",
-    "userJwtKey": "`]PVq5z*>``Z5hFQbv6ADAh{wsBeTmY(B!+R);sg#)zK9;YSt*2{wLG+#ks86tC$=)q]Tg-Jm,bP_$<>a=c}hpH"
-}
