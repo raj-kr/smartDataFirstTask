@@ -8,6 +8,7 @@ const Keys = require('./config/');
 let app = express();
 const server = http.createServer(app);
 //middlewares
+console.log('clinet', Keys.client);
 app.use(
     cors({
         origin: Keys.client,
@@ -39,6 +40,6 @@ app.get('/', async (req, res) => {
 });
 
 
-server.listen(3003, () => {
-    console.log('Server is running on port 3001');
+server.listen(Keys.port, () => {
+    console.log(`Server is running in ${Keys.environment} mode on port ${Keys.port}`);
 });

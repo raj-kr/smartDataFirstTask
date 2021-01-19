@@ -5,11 +5,14 @@ import Login from './component/Login';
 import SignUp from './component/Signup';
 import ProductAdd from './component/ProductAdd';
 import ProductList from './component/ProductList';
+import Profile from './component/Profile';
 import { Switch, Route, Link } from 'react-router-dom';
 import { PrivateRoute, isLogged, logout } from '../src/config/functions';
 
 const App = () => {
   const [isLog, setLogged] = useState(false);
+
+  // console.log('environments', process.env);
 
   useEffect(() => {
     let loginSatus = isLogged();
@@ -43,6 +46,9 @@ const App = () => {
                   <Link className="nav-link" to={"/list-product"}>List Product</Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" to={"/profile"}>Profile</Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link" onClick={() => { setLogged(false); logout() }}>Logout</Link>
                 </li>
               </ul>
@@ -52,12 +58,13 @@ const App = () => {
       </nav>
 
       <div className="outer">
-          <Switch>
-            <Route exact path='/' render={(props) => <Login setLogged={setLogged} {...props} />} />
-            <Route path="/sign-up" component={SignUp} />
-            <PrivateRoute path="/add-product" component={ProductAdd} />
-            <PrivateRoute path="/list-product" component={ProductList} />
-          </Switch>
+        <Switch>
+          <Route exact path='/' render={(props) => <Login setLogged={setLogged} {...props} />} />
+          <Route path="/sign-up" component={SignUp} />
+          <PrivateRoute path="/add-product" component={ProductAdd} />
+          <PrivateRoute path="/list-product" component={ProductList} />
+          <PrivateRoute path="/profile" component={Profile} />
+        </Switch>
       </div>
     </div>
   );

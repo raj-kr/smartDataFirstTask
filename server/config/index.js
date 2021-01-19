@@ -2,7 +2,8 @@
 * Production and Development keys are seperated according to condition.
 */
 const keys = {};
-if (process.env.ENVIRONMENT === 'development') {
+keys.environment = process.env.ENVIRONMENT;
+if (keys.environment === 'development') {
     keys.client = process.env.LOCAL_CLIENT_PATH;
     keys.server = process.env.LOCAL_SERVER_PATH;
 } else {

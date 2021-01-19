@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const crypto = require("crypto");
 const User = require('../models/users');
+const { userAuthCheck } = require('../config/middleware');
 const { hashPassword, checkIfEmpty, verifyHash, signJwt } = require('../config/functions');
 
 router.post('/signup', async (req, res) => {
@@ -113,61 +114,29 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get("/me", (req, res) => {
-    const { id: _id } = userInfo; //useinfo is global variable;contains the current user info
-    modalAdmin
-      .fetch({ _id })
-      .then((userList) => {
-        console.log("sd", _id, userList);
-        return res.json({ body: userList.result });
-      })
-      .catch((error) => {
-        return res.status(403).json({ body: error || "Something went wrong" });
-      });
-  });
-  
-  router.patch("/updateMe", (req, res) => {
+router.get('/profile', userAuthCheck, async (req, res) => {
     try {
-      upload(req, res, async (err) => {
-        if (err instanceof multer.MulterError) {
-          return res.status(500).send(err);
-        } else if (err) {
-          return res.status(500).send(err);
-        }
-        const { id: _id } = userInfo; //useinfo is global variable;contains the current user info
-        const { body, file } = req;
-        if (file) {
-          const { destination, filename } = file;
-          var profileImagePath = `http://localhost:8080/${destination}/${filename}`;
-        }
-        const { fname, lname, email } = body;
-        modalAdmin
-          .fetch({ email })
-          .then(({ result }) => {
-            if (result) console.log("result", result, email);
-  
-            modalAdmin
-              .update({ _id }, { fname, lname, email, profileImagePath })
-              .then(({ status, message }) => {
-                return res.json({ message, status: "success" });
-              })
-              .catch(({ status, message, body }) => {
-                return res.json({
-                  status: "error",
-                  message: `${message}, ${body}`,
-                });
-              });
-          })
-          .catch((e) => {
-            console.log("catc", e);
-          });
-      });
+        const { userid } = req.body.tokenData;
+        const userDetail = await User.findOne({ _id: userid }, { password: 0, __v: 0, _id: 0 }).lean();
+        res.status(200).send({ userDetail });
     } catch (error) {
-      console.log(error);
-      return res.json({
-        status: "error",
-        message: error || "Something went wrong",
-      });
+        console.log(error.message || 'Internal Server Error');
     }
-  });
+})
+
+router.patch('/update', userAuthCheck, async (req, res) => {
+    try {
+        const { userid } = req.body.tokenData;
+        const payload = req.body;
+        const response = await User.findOneAndUpdate({ _id: userid }, payload, { new: true });
+        if (response) {
+            res.status(200).send({ userDetail: response, msg: 'Profile Updated' });
+        } else {
+            res.status(201).send({ msg: 'Error updating User profile' });
+        }
+        console.log('response', response);
+    } catch (error) {
+        console.log(error.message || 'Internal Server Error');
+    }
+});
 module.exports = router;

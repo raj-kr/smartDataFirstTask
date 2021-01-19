@@ -56,7 +56,7 @@ const signJwt = (userid, name) => {
 const verifyJwt = token => {
     return new Promise(async (resolve, reject) => {
         try {
-            const isTokenValid = jwt.verify(token, userJwtKey)
+            const isTokenValid = jwt.verify(token, Keys.usersecret);
             if (isTokenValid) {
                 resolve(isTokenValid)
             }
