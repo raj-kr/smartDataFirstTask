@@ -134,9 +134,9 @@ router.patch('/update', userAuthCheck, async (req, res) => {
         } else {
             res.status(201).send({ msg: 'Error updating User profile' });
         }
-        console.log('response', response);
     } catch (error) {
         console.log(error.message || 'Internal Server Error');
     }
 });
+
 module.exports = router;

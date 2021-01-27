@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Layout from './Layout';
 import { userInstance } from '../config/axios';
 import { Form, Button } from 'react-bootstrap';
 
@@ -56,34 +57,36 @@ const ProductEdit = ({ editId, setShow }) => {
     }, [])
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" value={formData.name} className="form-control" placeholder="Enter product name" onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea type="text" name="description" value={formData.description} className="form-control" placeholder="Enter product description" onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Price</label>
-                    <input type="number" name="price" value={formData.price} className="form-control" min="1" placeholder="Enter product price" onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Image</label>
-                    <Form.File
-                        id="custom-file"
-                        label={formData.image || "Upload product image"}
-                        name="image"
-                        ref={fileRef}
-                        onChange={handleImage}
-                        custom
-                    />
-                </div>
-                <Button variant="success" className="btn-block" type="submit" >Edit Product</Button>
-            </form>
-        </div>
+        <Layout>
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" value={formData.name} className="form-control" placeholder="Enter product name" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Description</label>
+                        <textarea type="text" name="description" value={formData.description} className="form-control" placeholder="Enter product description" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Price</label>
+                        <input type="number" name="price" value={formData.price} className="form-control" min="1" placeholder="Enter product price" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Image</label>
+                        <Form.File
+                            id="custom-file"
+                            label={formData.image || "Upload product image"}
+                            name="image"
+                            ref={fileRef}
+                            onChange={handleImage}
+                            custom
+                        />
+                    </div>
+                    <Button variant="success" className="btn-block" type="submit" >Edit Product</Button>
+                </form>
+            </div>
+        </Layout>
     );
 }
 

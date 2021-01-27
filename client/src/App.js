@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Login from './component/Login';
@@ -6,67 +6,24 @@ import SignUp from './component/Signup';
 import ProductAdd from './component/ProductAdd';
 import ProductList from './component/ProductList';
 import Profile from './component/Profile';
-import { Switch, Route, Link } from 'react-router-dom';
-import { PrivateRoute, isLogged, logout } from '../src/config/functions';
+import AdminLogin from './component/AdminLogin';
+import AdminDashboard from './component/AdminDashboard';
+import { Switch, Route } from 'react-router-dom';
+import { AdminRoute, PrivateRoute } from '../src/config/functions';
 
 const App = () => {
-  const [isLog, setLogged] = useState(false);
 
-  // console.log('environments', process.env);
-
-  useEffect(() => {
-    let loginSatus = isLogged();
-    if (loginSatus) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, []);
   return (
-    <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={isLog ? '/list-product' : '/'}>smartData eCom</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            {!isLog ?
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/"}>Sign in</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
-                </li>
-              </ul>
-              :
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/add-product"}>Add Product</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/list-product"}>List Product</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/profile"}>Profile</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" onClick={() => { setLogged(false); logout() }}>Logout</Link>
-                </li>
-              </ul>
-            }
-          </div>
-        </div>
-      </nav>
+    <Switch>
+      <Route exact path='/' component={Login} />
+      <Route path="/sign-up" component={SignUp} />
+      <PrivateRoute path="/add-product" component={ProductAdd} />
+      <PrivateRoute path="/list-product" component={ProductList} />
+      <PrivateRoute path="/profile" component={Profile} />
 
-      <div className="outer">
-        <Switch>
-          <Route exact path='/' render={(props) => <Login setLogged={setLogged} {...props} />} />
-          <Route path="/sign-up" component={SignUp} />
-          <PrivateRoute path="/add-product" component={ProductAdd} />
-          <PrivateRoute path="/list-product" component={ProductList} />
-          <PrivateRoute path="/profile" component={Profile} />
-        </Switch>
-      </div>
-    </div>
+      <Route path='/admin/login' component={AdminLogin} />
+      <AdminRoute path='/admin/dashboard' component={AdminDashboard} />
+    </Switch>
   );
 }
 

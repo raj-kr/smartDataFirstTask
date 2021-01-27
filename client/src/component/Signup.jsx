@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Layout from './Layout';
 import { useHistory } from 'react-router-dom';
 import { userInstance } from '../config/axios';
 
@@ -25,31 +26,33 @@ const Signup = () => {
     }
 
     return (
-        <div className="inner">
-            <form onSubmit={handleSubmit}>
-                <h3>Register</h3>
+        <Layout>
+            <div className="inner">
+                <form onSubmit={handleSubmit}>
+                    <h3>Register</h3>
 
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" name="name" className="form-control" placeholder="First name" onChange={handleChange} />
-                </div>
+                    <div className="form-group">
+                        <label>First name</label>
+                        <input type="text" name="name" className="form-control" placeholder="First name" onChange={handleChange} />
+                    </div>
 
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" className="form-control" placeholder="Enter email" onChange={handleChange} />
-                </div>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" className="form-control" placeholder="Enter email" onChange={handleChange} />
+                    </div>
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="Enter password" onChange={handleChange} />
-                </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" className="form-control" placeholder="Enter password" onChange={handleChange} />
+                    </div>
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="/">log in?</a>
-                </p>
-            </form>
-        </div>
+                    <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
+                    <p className="forgot-password text-right">
+                        Already registered <a href="/">log in?</a>
+                    </p>
+                </form>
+            </div>
+        </Layout>
     );
 }
 

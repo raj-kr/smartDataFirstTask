@@ -3,7 +3,7 @@ import Layout from './Layout';
 import { userInstance } from '../config/axios';
 import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const AdminLogin = () => {
     const [formData, setFormData] = useState({});
     let history = useHistory();
 
@@ -15,15 +15,19 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const payload = {
-            email: formData.email,
+            user: formData.user,
             password: formData.password
         }
-        const { data: { code, token, msg } } = await userInstance.post('/users/login', payload);
-        if (code === 200) {
-            localStorage.setItem('accessToken', token);
-            history.push('/list-product')
-        } else {
-            alert(msg);
+        try {
+            const response = await userInstance.post('/admin/login', payload);
+            if (response.status === 200) {
+                localStorage.setItem('adminToken', response.data.token);
+                history.push('/admin/dashboard');
+            } else {
+                alert(response.data.msg);
+            }
+        } catch (error) {
+            console.log('error', error)
         }
     }
 
@@ -31,16 +35,16 @@ const Login = () => {
         <Layout>
             <div className="inner">
                 <form onSubmit={handleSubmit}>
-                    <h3>Log in</h3>
+                    <h3>Admin Panel Login</h3>
 
                     <div className="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" className="form-control" placeholder="Enter email" onChange={handleChange} />
+                        <label>Username</label>
+                        <input type="text" name="user" className="form-control" placeholder="Enter Username" onChange={handleChange} required />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" className="form-control" placeholder="Enter password" onChange={handleChange} />
+                        <input type="password" name="password" className="form-control" placeholder="Enter password" onChange={handleChange} required />
                     </div>
 
                     <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
@@ -50,4 +54,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default AdminLogin;

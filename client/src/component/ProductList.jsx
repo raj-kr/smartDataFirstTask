@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Layout from './Layout';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { userInstance } from '../config/axios';
 import { server } from '../config/keys';
@@ -80,72 +81,74 @@ const ProductList = () => {
     }, [show]);
 
     return (
-        <div className="product-inner">
-            <h3>List Product</h3>
-            <div className="row">
-                <div className="md-6">
-                    <h5>Sort By</h5>
+        <Layout>
+            <div className="product-inner">
+                <h3>List Product</h3>
+                <div className="row">
+                    <div className="md-6">
+                        <h5>Sort By</h5>
+                    </div>
+                    <div className="md-6">
+                        <select onChange={handleSort}>
+                            <option selected disabled>Selet Sort By</option>
+                            <option value="asc">{'Ascending'}</option>
+                            <option value="dsc">{'Descending'}</option>
+                            <option value="priceLow">{'Price Low to High'}</option>
+                            <option value="priceHigh">{'Price High to Low'}</option>
+                        </select>
+                        <input type="text" name="search" placeholder="Search Products by name" onChange={handleSearch}></input>
+                    </div>
                 </div>
-                <div className="md-6">
-                    <select onChange={handleSort}>
-                        <option selected disabled>Selet Sort By</option>
-                        <option value="asc">{'Ascending'}</option>
-                        <option value="dsc">{'Descending'}</option>
-                        <option value="priceLow">{'Price Low to High'}</option>
-                        <option value="priceHigh">{'Price High to Low'}</option>
-                    </select>
-                    <input type="text" name="search" placeholder="Search Products by name" onChange={handleSearch}></input>
-                </div>
-            </div>
-            <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Product Image</th>
-                        <th>Name</th>
-                        <th>Desciption</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {productList && productList.length !== 0 ?
-                        productList.map((product, index) => {
-                            return (
-                                <tr key={product._id}>
-                                    <td>{++index}</td>
-                                    <td>
-                                        <img src={`${server}/${product.image}`} width="100" height="100" alt={`smartData_${product.name}`}></img>
-                                    </td>
-                                    <td>{product.name}</td>
-                                    <td>{product.description}</td>
-                                    <td>{product.price}</td>
-                                    <td>
-                                        <Button variant="info" onClick={() => { setShow(true); setEditId(product._id) }}>Edit</Button>
-                                        <Button variant="danger" onClick={() => {
-                                            if (window.confirm("Are you sure, you want to Delete product?")) deleteProduct(product._id)
-                                        }
-                                        }>Delete</Button>
-                                    </td>
-                                </tr>
-                            );
-                        })
-                        :
-                        <tr><td colSpan="6">No Product Found</td></tr>
-                    }
-                </tbody>
-            </Table>
-            <Button variant="secondary" onClick={previousPage}>Prev</Button>
-            <Button variant="dark" onClick={nextPage}>Next</Button>
-            <Modal show={show} onHide={() => { setShow(false) }} backdrop="static" keyboard={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit Product</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <ProductEdit editId={editId} setShow={setShow} />
-                </Modal.Body>
-            </Modal>
-        </div >
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product Image</th>
+                            <th>Name</th>
+                            <th>Desciption</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {productList && productList.length !== 0 ?
+                            productList.map((product, index) => {
+                                return (
+                                    <tr key={product._id}>
+                                        <td>{++index}</td>
+                                        <td>
+                                            <img src={`${server}/${product.image}`} width="100" height="100" alt={`smartData_${product.name}`}></img>
+                                        </td>
+                                        <td>{product.name}</td>
+                                        <td>{product.description}</td>
+                                        <td>{product.price}</td>
+                                        <td>
+                                            <Button variant="info" onClick={() => { setShow(true); setEditId(product._id) }}>Edit</Button>
+                                            <Button variant="danger" onClick={() => {
+                                                if (window.confirm("Are you sure, you want to Delete product?")) deleteProduct(product._id)
+                                            }
+                                            }>Delete</Button>
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                            :
+                            <tr><td colSpan="6">No Product Found</td></tr>
+                        }
+                    </tbody>
+                </Table>
+                <Button variant="secondary" onClick={previousPage}>Prev</Button>
+                <Button variant="dark" onClick={nextPage}>Next</Button>
+                <Modal show={show} onHide={() => { setShow(false) }} backdrop="static" keyboard={false}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Product</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ProductEdit editId={editId} setShow={setShow} />
+                    </Modal.Body>
+                </Modal>
+            </div >
+        </Layout>
     );
 }
 
