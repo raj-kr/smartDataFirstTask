@@ -8,7 +8,7 @@ router.post('/signup', async (req, res) => {
     const body = req.body;
     //verifying if request body data is valid
     const { isValid } = checkIfEmpty(
-        body.firstName,
+        body.name,
         body.password,
         body.email,
     );

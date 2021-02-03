@@ -12,7 +12,6 @@ const ProductList = () => {
     let [pageIndex, setPageIndex] = useState(1);
 
     const getProducts = async () => {
-        console.log('pageIndex', pageIndex);
         const { status, data } = await userInstance.get(`/products/product/page/${pageIndex}`);
         if (status === 200) {
             setProductList(data.list);
